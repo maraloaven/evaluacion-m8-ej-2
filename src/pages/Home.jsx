@@ -79,7 +79,7 @@ const Home = () => {
           {!isInstalled && (
             <Alert variant="info">
               <Alert.Heading>Instala esta aplicación</Alert.Heading>
-              <p>Para un acceso más rápido y uso sin conexión, instala esta aplicación en tu dispositivo.</p>
+              <p>Para acceder más rápido y uso sin conexión, instala esta aplicación en tu dispositivo.</p>
             </Alert>
           )}
           
