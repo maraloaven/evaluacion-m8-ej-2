@@ -25,6 +25,12 @@ El sistema web contiene las siguientes características principales:
    - Manifiesto para instalación como aplicación.
    - Cache de recursos para optimizar rendimiento.
 
+5. **DevOps y CI/CD**:
+   - Dockerización de la aplicación para entornos consistentes.
+   - Pruebas automatizadas para componentes clave.
+   - Pipeline de CI/CD con GitHub Actions.
+   - Gestión de ramas siguiendo GitFlow simplificado.
+
 ## Tecnologías Utilizadas
 
 - **React**: Framework principal para la interfaz de usuario.
@@ -33,6 +39,9 @@ El sistema web contiene las siguientes características principales:
 - **IndexedDB (Dexie.js)**: Para almacenamiento de datos estructurados.
 - **React Router DOM**: Para la navegación entre páginas.
 - **Service Worker**: Para la funcionalidad offline y PWA.
+- **Docker**: Para la contenerización de la aplicación.
+- **Vitest y React Testing Library**: Para pruebas automatizadas.
+- **GitHub Actions**: Para la integración y despliegue continuos.
 
 ## Funcionalidades Clave
 
@@ -51,10 +60,18 @@ El sistema web contiene las siguientes características principales:
 4. **Instalable como Aplicación**:
    - Posibilidad de añadir a la pantalla de inicio en dispositivos móviles y de escritorio.
 
+5. **Entorno DevOps**:
+   - Contenedores Docker para ejecución consistente en cualquier entorno.
+   - Pipeline automatizado para validación de código en cada cambio.
+   - Flujo de trabajo organizado con ramas para desarrollo y producción.
+
 ## Estructura del Proyecto
 
 ```
-evaluacion-m6-ej-2/
+evaluacion-m8-ej-2/
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # Configuración del pipeline de CI/CD
 ├── public/
 │   ├── manifest.json           # Archivo de manifiesto PWA
 │   ├── service-worker.js       # Service Worker personalizado
@@ -82,12 +99,19 @@ evaluacion-m6-ej-2/
 │   │   ├── indexedDB.js        # Servicio para gestionar IndexedDB
 │   │   ├── localStorage.js     # Servicio para gestionar LocalStorage
 │   │   └── serviceWorkerRegistration.js # Registro del Service Worker
+│   ├── test/                   # Configuración de pruebas
+│   │   └── setup.js            # Configuración para pruebas con Vitest
 │   ├── styles/                 # Estilos CSS
 │   │   ├── index.css           # Estilos globales
 │   │   └── App.css             # Estilos de la aplicación
 │   ├── App.jsx                 # Componente principal de la aplicación
+│   ├── App.test.jsx            # Pruebas del componente principal
 │   ├── main.jsx                # Punto de entrada de la aplicación
 │   └── vite-env.d.ts           # Tipos para Vite
+├── Dockerfile                  # Configuración de Docker
+├── docker-compose.yml          # Configuración de Docker Compose
+├── vitest.config.js            # Configuración de Vitest para pruebas
+├── WORKFLOW.md                 # Documentación del flujo de trabajo con Git
 ├── index.html                  # HTML principal
 ├── vite.config.js              # Configuración de Vite
 ├── package.json                # Dependencias y scripts
@@ -96,17 +120,17 @@ evaluacion-m6-ej-2/
 
 ## Instrucciones de Uso
 
-### Pasos para Ejecutar
+### Pasos para Ejecutar (Desarrollo)
 
 1. Clonar el repositorio:
 ```bash
 git clone <URL del repositorio>
-cd evaluacion-m6-ej-2
+cd evaluacion-m8-ej-2
 ```
 
 2. Instalar dependencias:
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 3. Iniciar el servidor:
@@ -115,6 +139,55 @@ npm run dev
 ```
 
 4. Abrir http://localhost:3000 en el navegador.
+
+### Ejecutar con Docker
+
+1. Construir la imagen Docker:
+```bash
+docker build -t hospital-app .
+```
+
+2. Ejecutar el contenedor:
+```bash
+docker run -p 80:80 hospital-app
+```
+
+3. Acceder a la aplicación en http://localhost:80
+
+Alternativamente, usar Docker Compose:
+```bash
+docker-compose up -d
+```
+
+### Ejecutar Pruebas
+
+```bash
+npm test
+```
+
+Para ver la cobertura de código:
+```bash
+npm run test:coverage
+```
+
+## Flujo de Trabajo con Git
+
+Este proyecto sigue un flujo de trabajo basado en GitFlow simplificado:
+
+1. **Rama `master`**: Contiene código estable listo para producción.
+2. **Rama `develop`**: Para integración de nuevas características.
+3. **Ramas de características (`feature/*`)**: Para el desarrollo de funcionalidades específicas.
+
+Para más detalles, consultar el archivo [WORKFLOW.md](./WORKFLOW.md).
+
+## CI/CD con GitHub Actions
+
+El proyecto incluye un pipeline automatizado que se ejecuta en cada push a las ramas principales:
+
+1. **Instalación de dependencias**
+2. **Compilación del proyecto**
+3. **Ejecución de pruebas** (cuando están habilitadas)
+4. **Construcción y verificación de la imagen Docker**
 
 ## Autor
 - Martín Avendaño
