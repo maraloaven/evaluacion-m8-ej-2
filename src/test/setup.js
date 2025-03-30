@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -14,7 +15,7 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Simulaciones para react-router-dom
+// Mock de react-router-dom
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
@@ -25,13 +26,13 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-vi.mock('./services/indexedDB', () => ({
+vi.mock('../services/indexedDB', () => ({
   default: {
     initSampleData: vi.fn().mockResolvedValue(undefined)
   }
 }));
 
-vi.mock('./services/localStorage', () => ({
+vi.mock('../services/localStorage', () => ({
   default: {
     getUserPreferences: vi.fn().mockReturnValue({
       theme: 'light',
@@ -41,6 +42,6 @@ vi.mock('./services/localStorage', () => ({
   }
 }));
 
-vi.mock('./services/serviceWorkerRegistration', () => ({
+vi.mock('../services/serviceWorkerRegistration', () => ({
   register: vi.fn()
 }));
